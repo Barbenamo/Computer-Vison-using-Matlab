@@ -1,0 +1,36 @@
+clc
+clear all;
+cam = webcam('Integrated Camera');
+% preview(cam);
+img1 = snapshot(cam);
+%  imshow(img1);
+idx=[];
+t=10; %duration of video.
+fps=20; %Frames per second.
+nof=t*fps; %Number of frames.
+ln.LineWidth=0.025;
+LineStyle='-';
+ln.MarkerEdgeColor = 'k';
+ for index=1:nof
+    img1 = snapshot(cam);% Aquire one frame.
+    img1= imresize(img1,1/2);
+      for i=1:720/2
+         for j=1:1280/2
+             if( img1(i,j,1)<80 && img1(i,j,2)<80 && img1(i,j,3)<250 && img1(i,j,3)>100)             
+                 idx=[idx,[i;j]];
+             end
+         end 
+      end
+    if(size(idx)>0) 
+%      hold on
+    imshow(img1);
+    hold on
+    ln=plot(idx(2,:),idx(1,:),'.r');
+    hold off
+    end
+     pause (t/nof);
+     
+    end
+
+ 
+ clear cam
