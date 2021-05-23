@@ -1,0 +1,52 @@
+clc
+clear all;
+cam = webcam('Integrated Camera');
+% preview(cam);
+img1 = snapshot(cam);
+%  imshow(img1);
+idx=[];
+t=10; %duration of video.
+fps=20; %Frames per second.
+nof=t*fps; %Number of frames.
+ln.LineWidth=0.025;
+LineStyle='-';
+ln.MarkerEdgeColor = 'k';
+alltime=tic;
+counter=0;
+srd=[];
+ for index=1:nof
+     idx=[];
+     srd=[];
+    img1 = snapshot(cam);% Aquire one frame.
+    img1= imresize(img1,1/2);
+      for i=1:720/2
+         for j=1:1280/2
+             if( img1(i,j,1)<80 && img1(i,j,2)<80 && img1(i,j,3)<250 && img1(i,j,3)>100)             
+                 idx=[idx,[i;j]];
+             end
+         end 
+      end
+  xm=mean(idx(2,:));
+  ym=mean(idx(1,:));
+  r=((abs(idx(2,:)-xm)).^2+(abs(idx(1,:)-ym)).^2);
+  R=max(r); 
+    if(size(idx)>0) 
+    imshow(img1); 
+    hold on
+    plot(xm,ym,'.b');
+    circle(xm,ym,sqrt(R));
+    hold off
+    end  
+       pause (t/nof);
+     counter=counter+1; 
+    end
+allt=toc(alltime);
+res=counter/allt;
+ 
+ clear cam
+function circle(x,y,r)
+ang=0:0.01:2*pi; 
+xp=r*cos(ang);
+yp=r*sin(ang);
+plot(x+xp,y+yp,'.g');
+end
