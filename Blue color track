@@ -5,13 +5,16 @@ cam = webcam('Integrated Camera');
 img1 = snapshot(cam);
 %  imshow(img1);
 idx=[];
-t=10; %duration of video.
+t=5; %duration of video.
 fps=20; %Frames per second.
 nof=t*fps; %Number of frames.
 ln.LineWidth=0.025;
 LineStyle='-';
 ln.MarkerEdgeColor = 'k';
+alltime=tic;
+counter=0;
  for index=1:nof
+     idx=[];
     img1 = snapshot(cam);% Aquire one frame.
     img1= imresize(img1,1/2);
       for i=1:720/2
@@ -28,9 +31,11 @@ ln.MarkerEdgeColor = 'k';
     ln=plot(idx(2,:),idx(1,:),'.r');
     hold off
     end
-     pause (t/nof);
+      pause (t/nof);
+     counter=counter+1;
      
     end
-
+allt=toc(alltime);
+res=counter/allt;
  
  clear cam
