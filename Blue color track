@@ -31,7 +31,7 @@ counter=0;
     ln=plot(idx(2,:),idx(1,:),'.r');
     hold off
     end
-      pause (t/nof);
+%       pause (t/nof);
      counter=counter+1;
      
     end
