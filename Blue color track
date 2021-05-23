@@ -39,3 +39,4 @@ allt=toc(alltime);
 res=counter/allt;
  
  clear cam
+%ver 1.1
